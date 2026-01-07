@@ -46,7 +46,7 @@ const toggleRemaining = () => {
 <template>
   <div class="chat-actions-container">
     <div class="chat-msg-action-title">
-      <span>{{ props.label || 'ACTIONS' }}</span>
+      <span>{{ props.label || t('ai.message.action.label') }}</span>
     </div>
     <div class="chat-msg-actions-container">
       <div class="chat-msg-action-tags">

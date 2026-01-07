@@ -34,30 +34,30 @@ const { t } = useI18n(store);
 const enum ChatBotEnum {
   Local = 'ollama', // eslint-disable-line no-unused-vars
   OpenAI = 'openai', // eslint-disable-line no-unused-vars
-  Gemini = 'gemini', // eslint-disable-line no-unused-vars
-  Bedrock = 'bedrock', // eslint-disable-line no-unused-vars
+  DeepSeek = 'deepseek', // eslint-disable-line no-unused-vars
 }
 
 const models = {
-  [ChatBotEnum.Local]:  ['gpt-oss:20b'],
+  [ChatBotEnum.Local]:  [
+    'llama3.1:latest',
+    'llama3.1:8b',
+    'qwen2.5:latest',
+    'deepseek-r1:latest',
+  ],
   [ChatBotEnum.OpenAI]: [
     'gpt-4o',
     'gpt-4o-mini',
     'o3-mini',
     'o3',
-    'o4-mini',
-    'gpt-4.1',
-    'gpt-4',
-    'gpt-3.5-turbo',
+    'claude-3-opus',
+    'claude-3.5-sonnet',
+    'Custom Model...',
   ],
-  [ChatBotEnum.Gemini]: [
-    'gemini-2.0-flash',
-    'gemini-2.0-flash-lite',
-    'gemini-2.5-pro',
-    'gemini-2.5-flash',
-    'gemini-2.5-flash-lite',
+  [ChatBotEnum.DeepSeek]: [
+    'deepseek-chat',
+    'deepseek-reasoner',
+    'deepseek-coder',
   ],
-  [ChatBotEnum.Bedrock]: ['global.anthropic.claude-opus-4-5-20251101-v1:0'],
 };
 
 const activeChatbotOptions = [
@@ -74,16 +74,10 @@ const activeChatbotOptions = [
     value:       ChatBotEnum.OpenAI,
   },
   {
-    name:        t(`aiConfig.form.${ Settings.ACTIVE_CHATBOT }.options.${ ChatBotEnum.Gemini }.name`),
-    description: t(`aiConfig.form.${ Settings.ACTIVE_CHATBOT }.options.${ ChatBotEnum.Gemini }.description`, {}, true),
-    icon:        'icon-gemini',
-    value:       ChatBotEnum.Gemini,
-  },
-  {
-    name:        t(`aiConfig.form.${ Settings.ACTIVE_CHATBOT }.options.${ ChatBotEnum.Bedrock }.name`),
-    description: t(`aiConfig.form.${ Settings.ACTIVE_CHATBOT }.options.${ ChatBotEnum.Bedrock }.description`, {}, true),
-    icon:        'icon-aws-bedrock',
-    value:       ChatBotEnum.Bedrock,
+    name:        t(`aiConfig.form.${ Settings.ACTIVE_CHATBOT }.options.${ ChatBotEnum.DeepSeek }.name`),
+    description: t(`aiConfig.form.${ Settings.ACTIVE_CHATBOT }.options.${ ChatBotEnum.DeepSeek }.description`, {}, true),
+    icon:        'icon-openai',
+    value:       ChatBotEnum.DeepSeek,
   },
 ];
 
@@ -158,7 +152,8 @@ const resource = useFetch(async() => {
 
 const formData = ref<FormData>(resource.value?.data?.data || {});
 const modelOptions = ref(models[ChatBotEnum.Local]);
-const chatbotConfigKey = ref<Settings.OLLAMA_URL | Settings.GOOGLE_API_KEY | Settings.OPENAI_API_KEY | Settings.AWS_SECRET_ACCESS_KEY>(Settings.OLLAMA_URL);
+const chatbotConfigKey = ref<Settings.OLLAMA_URL | Settings.GOOGLE_API_KEY | Settings.OPENAI_API_KEY | Settings.AWS_SECRET_ACCESS_KEY | Settings.DEEPSEEK_API_KEY>(Settings.OLLAMA_URL);
+const isCustomModel = ref(false);
 
 const chatbotConfigComponent = computed(() => {
   return chatbotConfigKey.value === Settings.OLLAMA_URL ? LabeledInput : Password;
@@ -171,12 +166,14 @@ function getModelKey(chatbot: ChatBotEnum) {
 /**
  * Updates the form configuration based on the selected chatbot.
  * Sets the appropriate model options and config key for the selected chatbot.
- * @param chatbot The selected chatbot provider ('OpenAI', 'Gemini', or
+ * @param chatbot The selected chatbot provider ('OpenAI Compatible', 'DeepSeek', or
  * 'Local').
  */
 const updateFormConfig = (chatbot: ChatBotEnum) => {
   const modelKey = getModelKey(chatbot);
   const modelField = formData.value[modelKey] || models[chatbot as ChatBotEnum][0];
+
+  isCustomModel.value = false;
 
   if (modelField) {
     modelOptions.value = models[chatbot as ChatBotEnum];
@@ -186,11 +183,8 @@ const updateFormConfig = (chatbot: ChatBotEnum) => {
     case ChatBotEnum.OpenAI:
       chatbotConfigKey.value = Settings.OPENAI_API_KEY;
       break;
-    case ChatBotEnum.Gemini:
-      chatbotConfigKey.value = Settings.GOOGLE_API_KEY;
-      break;
-    case ChatBotEnum.Bedrock:
-      chatbotConfigKey.value = Settings.AWS_SECRET_ACCESS_KEY;
+    case ChatBotEnum.DeepSeek:
+      chatbotConfigKey.value = Settings.DEEPSEEK_API_KEY;
       break;
     case ChatBotEnum.Local:
     default:
@@ -202,10 +196,10 @@ const updateFormConfig = (chatbot: ChatBotEnum) => {
 
 /**
  * Selects the default chatbot based on values in the form data.
- * If no chatbot is currently selected, it calculates the default chatbot in the order: Ollama, Gemini and OpenAI
+ * If no chatbot is currently selected, it calculates the default chatbot in the order: Ollama, DeepSeek, OpenAI
  */
 function updateChatBotConfig() {
-  if (!![ChatBotEnum.Gemini, ChatBotEnum.OpenAI, ChatBotEnum.Local, ChatBotEnum.Bedrock].find((c) => c === formData.value[Settings.ACTIVE_CHATBOT])) {
+  if (!![ChatBotEnum.OpenAI, ChatBotEnum.Local, ChatBotEnum.DeepSeek].find((c) => c === formData.value[Settings.ACTIVE_CHATBOT])) {
     return;
   }
 
@@ -213,12 +207,10 @@ function updateChatBotConfig() {
 
   if (formData.value[Settings.OLLAMA_URL]) {
     chatBot = ChatBotEnum.Local;
-  } else if (formData.value[Settings.GOOGLE_API_KEY]) {
-    chatBot = ChatBotEnum.Gemini;
+  } else if (formData.value[Settings.DEEPSEEK_API_KEY]) {
+    chatBot = ChatBotEnum.DeepSeek;
   } else if (formData.value[Settings.OPENAI_API_KEY]) {
     chatBot = ChatBotEnum.OpenAI;
-  }  else if (formData.value[Settings.AWS_SECRET_ACCESS_KEY]) {
-    chatBot = ChatBotEnum.Bedrock;
   }
 
   formData.value[Settings.ACTIVE_CHATBOT] = chatBot;
@@ -252,13 +244,24 @@ watch(resource, (newResource) => {
  * @param val The value to set for the key.
  */
 const updateValue = (key: Settings, val: ChatBotEnum | string) => {
+  const modelKey = getModelKey(formData.value[Settings.ACTIVE_CHATBOT] as ChatBotEnum);
+
+  // Check if the value is 'Custom Model...'
+  if (key === modelKey && val === 'Custom Model...') {
+    isCustomModel.value = true;
+    formData.value[key] = '';
+    return;
+  }
+
   formData.value[key] = val;
+
   if (key === Settings.ACTIVE_CHATBOT) {
     const chatbot = val as ChatBotEnum;
-    const modelKey = getModelKey(chatbot);
+    const newModelKey = getModelKey(chatbot);
 
     updateFormConfig(chatbot);
-    formData.value[modelKey] = formData.value[modelKey] || models[chatbot][0];
+    isCustomModel.value = false;
+    formData.value[newModelKey] = formData.value[newModelKey] || models[chatbot][0];
   }
 };
 
@@ -342,45 +345,12 @@ const save = async(btnCB: (arg: boolean) => void) => { // eslint-disable-line no
         </label>
       </div>
 
-      <template v-if="formData[Settings.ACTIVE_CHATBOT] == ChatBotEnum.Bedrock">
-        <div class="form-field">
-          <Password
-            :value="formData[Settings.AWS_ACCESS_KEY_ID]"
-            :label="t(`aiConfig.form.${ Settings.AWS_ACCESS_KEY_ID}.label`)"
-            @update:value="(val: string) => updateValue(Settings.AWS_ACCESS_KEY_ID, val)"
-          />
-          <label class="text-label">
-            {{ t(`aiConfig.form.${ Settings.AWS_ACCESS_KEY_ID}.description`) }}
-          </label>
-        </div>
-        <div class="form-field">
-          <Password
-            :value="formData[Settings.AWS_BEARER_TOKEN_BEDROCK]"
-            :label="t(`aiConfig.form.${ Settings.AWS_BEARER_TOKEN_BEDROCK}.label`)"
-            @update:value="(val: string) => updateValue(Settings.AWS_BEARER_TOKEN_BEDROCK, val)"
-          />
-          <label class="text-label">
-            {{ t(`aiConfig.form.${ Settings.AWS_BEARER_TOKEN_BEDROCK}.description`) }}
-          </label>
-        </div>
-        <div class="form-field">
-          <labeled-input
-            :value="formData[Settings.AWS_REGION]"
-            :label="t(`aiConfig.form.${ Settings.AWS_REGION}.label`)"
-            @update:value="(val: string) => updateValue(Settings.AWS_REGION, val)"
-          />
-          <label class="text-label">
-            {{ t(`aiConfig.form.${ Settings.AWS_REGION}.description`) }}
-          </label>
-        </div>
-      </template>
-
       <div class="form-field">
         <component
-          :is="modelOptions.length > 1 ? LabeledSelect : LabeledInput"
+          :is="!isCustomModel && modelOptions.length > 1 ? LabeledSelect : LabeledInput"
           :value="formData[getModelKey(formData[Settings.ACTIVE_CHATBOT] as ChatBotEnum)]"
           :label="t(`aiConfig.form.${ Settings.MODEL }.label`)"
-          :options="modelOptions"
+          :options="!isCustomModel ? modelOptions : undefined"
           @update:value="(val: string) => updateValue(getModelKey(formData[Settings.ACTIVE_CHATBOT] as ChatBotEnum), val)"
         />
         <label class="text-label">

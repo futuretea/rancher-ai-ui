@@ -1,0 +1,233 @@
+nav:
+  alt:
+    userAvatar: 用户头像
+    assistantAvatar: MOSS头像
+
+ai:
+  action:
+    openChat: 询问MOSS
+  nonPrime:
+    title: Rancher AI 助手需要 Rancher Prime
+    message: Rancher AI 助手需要 Rancher Prime 订阅。请升级到 Prime 或卸载此扩展。
+  header:
+    title: MOSS
+  message:
+    system:
+      welcome:
+        greetings:
+          line1: 我是MOSS，您的专属 AI 助手。
+          line2: 我可以帮您做什么？
+          line3: 您好，{name}！
+        info: 提示：您还可以与 Rancher UI 中的状态徽章和错误消息进行交互，向我寻求帮助。
+        suggestions:
+          label: 根据您的上下文，这里有一些建议：
+    action:
+      label: 操作
+    assistant:
+      thinking:
+        completed: 已完成
+        inProgress: 思考中
+    source:
+      label: 来源
+    relatedResourcesActions:
+      label: 相关资源
+    quickActions:
+      label: 快速操作
+    actions:
+      more: 还有 {count} 个资源
+      less: 收起
+      tooltip:
+        copy: 复制到剪贴板
+        resend: 重新发送消息
+        showThinking: 显示思考过程
+        hideThinking: 隐藏思考过程
+      hideThinking: 隐藏思考过程
+      showCompleteMessage: 查看更多
+      hideCompleteMessage: 收起
+    suggestions:
+      label: 快速操作
+    template:
+      heyAnalyzeResource: MOSS，请分析此资源
+      namespace: 命名空间
+      summary:
+        analyseKindAndTroubleshoot: 请分析 "<strong>{name}</strong>" {kind} 并解决任何问题。
+        analyseBanner: MOSS，请分析 "<strong>{label}</strong>" 消息并解决 {issue} 问题。
+      message:
+        explainStateForResource: '解释 "{state}" 状态对 {kind}: {name} 的含义。'
+      bullet:
+        identifyCause: 确定问题的原因：分析资源状态和相关事件，确定其处于此状态的最可能原因。
+        provideActions: 提供编号的操作列表来解决问题。
+        confirmExpectedState: 确认这是预期状态及其含义。
+      theError: 错误
+      anyProblems: 问题
+  prompt:
+    placeholder: 询问MOSS...
+    send: 发送
+  context:
+    label: 上下文
+    add: 添加上下文
+    none: 无上下文
+    reset: 重置
+    resources:
+      cluster: 集群
+      namespace: 命名空间
+  agent:
+    label: 使用 AI（运行 {name} {model}）
+    verifyResults:
+      button:
+        label: 验证结果
+      disclaimer:
+        section1:
+          title: 验证所有结果
+          body: AI 可能产生不正确、不完整或过时的信息。您有责任独立验证所有响应的准确性和适当性。
+        section2:
+          title: 风险自负
+          body: 切勿在生产环境中应用命令、YAML 配置或技术建议，除非首先在安全的隔离测试环境中进行验证。SUSE 不对因使用此机器人提供的信息而导致的任何损害或损失（包括数据丢失、系统停机或安全漏洞）承担责任。
+        section3:
+          title: 不要分享机密信息
+          body: 不要在聊天中输入任何敏感数据、凭据、API 密钥或其他机密信息。此外，不要输入可用于识别活人的任何数据（例如姓名和联系方式）或个人身份信息。
+    models:
+      ollama: Ollama
+      openai-compatible: ChatGPT
+      deepseek: DeepSeek
+    unknown: 未知代理
+    goToInstall: 查看图表
+    goToDeployment: 查看代理部署
+  hooks:
+    menu:
+      header:
+        title: 询问MOSS
+      items:
+        troubleshoot: 解释
+        inspect: 查看日志详情
+        recover: 尝试恢复
+        explain: 解释错误
+      itemMessages:
+        troubleshoot: 解释为什么 {kind} {name} 处于错误状态
+        inspect: 显示 {kind} {name} 的日志详情
+        recover: 尝试恢复 {kind} {name}
+        explain: 解释错误 "{error}"
+    overlay:
+      badgeSliding:
+        label: 询问MOSS
+      bannerButton:
+        label: 询问MOSS
+  settings:
+    title: AI 助手
+    goToSettings: 配置 AI 助手
+  confirmation:
+    message:
+      question: 您确定要继续此操作吗？
+      description: 我将 <b>{op}</b> 集群 <code>{cluster}</code> 命名空间 <code>{namespace}</code> 中 <code>{name}</code> {kind} 在路径 <code>{path}</code> 处的值 <code>{value}</code>。
+    confirm: 确认
+    cancel: 取消
+    confirmed: 已确认
+    canceled: 已取消
+  phase:
+    idle: ''
+    initializing: 初始化中
+    thinking: 思考中
+    working: 处理中
+    processing: 处理中
+    awaitingConfirmation: 等待确认
+    generatingResponse: 生成响应中
+    confirming: 确认中
+    finalizing: 完成结果中
+    connecting: 连接中
+    connected: 已连接
+    disconnected: 已断开
+    reconnecting: 重连中
+  error:
+    message:
+      processing: 处理消息时出错：
+    websocket:
+      generic: 发生 WebSocket 错误。请稍后重试。
+      connection: 连接到 Rancher AI Agent 失败。请稍后重试。
+      disconnected: 连接已关闭。
+    agent:
+      secret:
+        noPermission: 您没有权限访问 Rancher AI Agent 配置。请联系您的管理员。
+        missingConfig: Rancher AI Agent 配置缺失。请前往全局 [设置 > AI 助手] 配置代理。
+      deployment:
+        noPermission: 您没有权限访问 Rancher AI Agent。请联系您的管理员。
+        notFound: 未找到 Rancher AI Agent。请确保已安装代理图表。
+        notActive: Rancher AI Agent 未激活。请确保代理正在正常运行。
+  options:
+    chat:
+      reset:
+        label: 重置聊天
+        description: 清空当前聊天并开始新对话
+      download:
+        label: 下载消息
+        description: 将当前消息下载到文本文件
+      help:
+        label: 聊天帮助
+        description: 获取聊天功能使用帮助
+      config:
+        label: 编辑配置
+        description: 配置您助手的 AI 模型和提供商
+  generic:
+    opensInNewTab: 在新标签页中打开
+
+aiConfig:
+  label: AI 助手
+  form:
+    header: AI 模型配置
+    description: 为您的助手配置 AI 模型和提供商
+    section:
+      provider:
+        header: AI 聊天机器人提供商
+        description: 为您的聊天机器人选择 AI 提供商
+        banner:
+          header: "隐私声明："
+          description: '使用外部第三方提供商时，请注意本平台不拥有或控制此 LLM，也不为其输出负责。您的提示和数据将发送到提供商的服务器。这些提供商可能会根据其隐私政策使用您的数据。公共 LLM 的额外风险是其用于训练的数据集范围更广。您的输入数据可能会被纳入该数据集，使其可被其他用户访问或用于未来模型训练。<br><br>对于高度敏感或机密信息，我们强烈建议使用本地提供商。'
+      rag:
+        header: RAG（检索增强生成）
+        description: 启用 RAG 让您的聊天机器人更智能，获得外部知识访问权限
+        banner: RAG（检索增强生成）允许聊天机器人在生成响应之前搜索知识库。这减少了幻觉，并基于您的特定数据提供更准确、更新的答案。
+      langfuse:
+        header: Langfuse 配置
+        description: 连接到 Langfuse 以监控、跟踪和调试您的 AI 助手
+        banner: Langfuse 是用于监控 LLM 应用程序的开源工具。这些设置将您的聊天机器人连接到 Langfuse 服务器，以便您可以分析性能并排查问题。主机是服务器地址，密钥用于验证您的应用程序。
+    EMBEDDINGS_MODEL:
+      label: 嵌入模型
+    ENABLE_RAG:
+      label: 为此助手启用 RAG
+    DEEPSEEK_API_KEY:
+      label: DeepSeek API 密钥
+      description: 向 DeepSeek 验证请求的密钥
+    LANGFUSE_HOST:
+      label: Langfuse 主机
+      description: 您的 Langfuse 服务器 URL（例如，https://cloud.langfuse.com）
+    LANGFUSE_PUBLIC_KEY:
+      label: Langfuse 公钥
+      description: 客户端事件和用户反馈的公共 API 密钥（可安全暴露）
+    LANGFUSE_SECRET_KEY:
+      label: Langfuse 密钥
+      description: 服务器到服务器通信的私有 API 密钥（保持机密）
+    MODEL:
+      label: 模型
+      description: 选择用于生成响应的 AI 模型
+    OLLAMA_URL:
+      label: Ollama URL
+      description: 您的 Ollama 实例所在 URL
+    OPENAI_URL:
+      label: OpenAI 第三方 URL
+      description: （可选）第三方 OpenAI 兼容服务的 URL，如 Azure 或 Evroc
+    OPENAI_API_KEY:
+      label: OpenAI 密钥
+      description: 向 OpenAI 服务验证请求的密钥
+    SYSTEM_PROMPT:
+      label: 系统提示
+    ACTIVE_LLM:
+      label: AI 聊天机器人
+      options:
+        ollama:
+          name: 本地 (Ollama)
+          description: 使用 Ollama 在本地运行模型
+        openai:
+          name: OpenAI API
+          description: 使用 OpenAI 服务（自定义端点）
+        deepseek:
+          name: DeepSeek
+          description: 使用 DeepSeek 模型

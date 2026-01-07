@@ -1,3 +1,8 @@
+nav:
+  alt:
+    userAvatar: User Avatar
+    assistantAvatar: Liz Avatar
+
 ai:
   action:
     openChat: Ask Liz
@@ -16,6 +21,8 @@ ai:
         info: 'Pro tip: you can also interact with the status badges and error messages throughout the Rancher UI to ask me for help.'
         suggestions:
           label: 'Here are a few suggestions based on your context:'
+    action:
+      label: ACTIONS
     assistant:
       thinking:
         completed: Completed
@@ -86,8 +93,7 @@ ai:
     models:
       ollama: Ollama
       openai: ChatGPT
-      gemini: Gemini
-      bedrock: Bedrock
+      deepseek: DeepSeek
     unknown: Unknown Agent
     goToInstall: View Charts
     goToDeployment: View Agent Deployment
@@ -178,7 +184,7 @@ aiConfig:
         description: Select the AI provider for your chatbot
         banner:
           header: "Privacy Notice:"
-          description: 'When using external, third-party providers, please be aware that SUSE does not own or control this LLM and is not responsible for its output. Your prompts and data will be sent to the provider’s servers (e.g., Google’s servers for Gemini). These providers may use your data according to their own privacy policies. The additional risk with public LLMs is the much wider dataset they use for training. Your input data could potentially be incorporated into that dataset, making it accessible to other users or used for future model training.<br><br>For highly sensitive or confidential information, we strongly recommend using a local provider instead.'
+          description: 'When using external, third-party providers, please be aware that this platform does not own or control this LLM and is not responsible for its output. Your prompts and data will be sent to the provider’s servers. These providers may use your data according to their own privacy policies. The additional risk with public LLMs is the much wider dataset they use for training. Your input data could potentially be incorporated into that dataset, making it accessible to other users or used for future model training.<br><br>For highly sensitive or confidential information, we strongly recommend using a local provider instead.'
       rag:
         header: RAG (Retrieval-Augmented Generation)
         description: Enable RAG to make your chatbot smarter by giving it access to external knowledge 
@@ -191,9 +197,9 @@ aiConfig:
       label: Embeddings Model
     ENABLE_RAG:
       label: Enable RAG for this assistant
-    GOOGLE_API_KEY:
-      label: Google API Key
-      description: The key to authenticate requests to Gemini
+    DEEPSEEK_API_KEY:
+      label: DeepSeek API Key
+      description: The key to authenticate requests to DeepSeek
     LANGFUSE_HOST:
       label: Langfuse Host
       description: The URL of your Langfuse server (e.g., https://cloud.langfuse.com)
@@ -214,33 +220,18 @@ aiConfig:
       description: (Optional) The URL of a third-party OpenAI-compatible service, e.g., Azure or Evroc
     OPENAI_API_KEY:
       label: OpenAI Key
-      description: The key to authenticate requests to OpenAI’s services
+      description: The key to authenticate requests to OpenAI's services
     SYSTEM_PROMPT:
       label: System Prompt
     ACTIVE_LLM:
       label: AI Chatbot
       options:
         ollama:
-          name: Local
+          name: Local (Ollama)
           description: Run models locally with Ollama
         openai:
-          name: OpenAI
-          description: Use OpenAI's GPT models
-        gemini:
-          name: Gemini
-          description: Use Google's Gemini models
-        bedrock:
-          name: Bedrock
-          description: Use Amazon's Bedrock models
-    AWS_REGION:
-      label: AWS Region
-      description: The AWS region where your Bedrock instance is hosted
-    AWS_SECRET_ACCESS_KEY:
-      label: AWS Secret Access Key
-      description: The secret key to authenticate requests to AWS Bedrock
-    AWS_ACCESS_KEY_ID:
-      label: AWS Access Key ID
-      description: The access key ID to authenticate requests to AWS Bedrock
-    AWS_BEARER_TOKEN_BEDROCK:
-      label: AWS Bedrock Bearer Token
-      description: (Optional) The bearer token to authenticate requests to AWS Bedrock
+          name: OpenAI Compatible API
+          description: Use OpenAI-compatible services (custom endpoints)
+        deepseek:
+          name: DeepSeek
+          description: Use DeepSeek models

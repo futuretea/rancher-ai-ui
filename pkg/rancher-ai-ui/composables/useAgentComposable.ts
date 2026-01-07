@@ -60,22 +60,18 @@ export function useAgentComposable() {
     const {
       ACTIVE_LLM,
       OLLAMA_URL,
-      GOOGLE_API_KEY,
       OPENAI_API_KEY,
-      AWS_SECRET_ACCESS_KEY,
-      AWS_BEARER_TOKEN_BEDROCK,
+      DEEPSEEK_API_KEY,
     } = data;
 
     if (ACTIVE_LLM) {
       activeLLM = decodeLLM(ACTIVE_LLM);
     } else if (OLLAMA_URL) {
       activeLLM = 'ollama';
-    } else if (GOOGLE_API_KEY) {
-      activeLLM = 'gemini';
+    } else if (DEEPSEEK_API_KEY) {
+      activeLLM = 'deepseek';
     } else if (OPENAI_API_KEY) {
       activeLLM = 'openai';
-    } else if (AWS_SECRET_ACCESS_KEY || AWS_BEARER_TOKEN_BEDROCK) {
-      activeLLM = 'bedrock';
     }
 
     activeModel = decodeModel(data, activeLLM);

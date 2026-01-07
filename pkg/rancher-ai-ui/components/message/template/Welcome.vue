@@ -64,7 +64,7 @@ const user = computed(() => {
         <div class="chat-welcome-msg-avatar-circle">
           <img
             :src="lizIcon"
-            alt="Liz Avatar"
+            :alt="t('nav.alt.assistantAvatar')"
             width="70"
             height="70"
           />
