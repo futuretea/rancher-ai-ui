@@ -183,7 +183,7 @@ const user = computed(() => {
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid var(--border);
-  background: #35B777;
+  background: var(--background-color);
   color: var(--body-text);
   white-space: nowrap;
   pointer-events: none;
