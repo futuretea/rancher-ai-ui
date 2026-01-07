@@ -1,24 +1,21 @@
 nav:
   alt:
     userAvatar: User Avatar
-    assistantAvatar: Liz Avatar
+    assistantAvatar: MOSS Avatar
 
 ai:
   action:
-    openChat: Ask Liz
-  nonPrime:
-    title: Rancher AI Assistant requires Rancher Prime
-    message: The Rancher AI Assistant requires a Rancher Prime subscription. Please upgrade to Prime or uninstall this extension.
+    openChat: Ask MOSS
   header:
-    title: Liz
+    title: MOSS
   message:
     system:
       welcome:
         greetings:
-          line1: I'm Liz, your personal AI assistant.
+          line1: I'm MOSS, your personal AI assistant.
           line2: How can I help you?
           line3: 'Hi, {name}!'
-        info: 'Pro tip: you can also interact with the status badges and error messages throughout the Rancher UI to ask me for help.'
+        info: 'Pro tip: you can also interact with the status badges and error messages throughout the UI to ask me for help.'
         suggestions:
           label: 'Here are a few suggestions based on your context:'
     action:
@@ -51,11 +48,11 @@ ai:
     suggestions:
       label: Quick Actions
     template:
-      heyAnalyzeResource: 'Hey Liz, please analyse the resource'
+      heyAnalyzeResource: 'Hey MOSS, please analyse the resource'
       namespace: 'Namespace'
       summary:
         analyseKindAndTroubleshoot: 'Please analyse the {kind} "<strong>{name}</strong>" and troubleshoot any problems.'
-        analyseBanner: 'Hey Liz, please analyse the "<strong>{label}</strong>" message and troubleshoot {issue}.'
+        analyseBanner: 'Hey MOSS, please analyse the "<strong>{label}</strong>" message and troubleshoot {issue}.'
       message:
         explainStateForResource: 'Explain what the "{state}" state means for the {kind}: {name}.'
       bullet:
@@ -65,7 +62,7 @@ ai:
       theError: 'the error'
       anyProblems: 'any problems'
   prompt:
-    placeholder: Ask Liz...
+    placeholder: Ask MOSS...
     send: Send
   context:
     label: CONTEXT
@@ -86,7 +83,7 @@ ai:
           body: The AI may produce incorrect, incomplete, or outdated information. You are solely responsible for independently verifying the accuracy and appropriateness of all responses.
         section2:
           title: Use at Your Own Risk
-          body: Never apply commands, YAML configurations, or technical advice to a production environment without first validating them in a safe, isolated test setting. SUSE is not liable for any damages or losses (including data loss, system downtime, or security vulnerabilities) resulting from the use of information provided by this bot.
+          body: Never apply commands, YAML configurations, or technical advice to a production environment without first validating them in a safe, isolated test setting.
         section3:
           title: Do Not Share Secrets
           body: Do not input any sensitive data, credentials, API keys, or other confidential information. Furthermore, do not input any data that could be used to identify a living person (such as names and contact details) or any other personally identifiable information into the chat.
@@ -100,7 +97,7 @@ ai:
   hooks:
     menu:
       header:
-        title: Ask Liz
+        title: Ask MOSS
       items:
         troubleshoot: Explain
         inspect: Show me the log details
@@ -113,9 +110,9 @@ ai:
         explain: Explain Error "{error}"
     overlay:
       badgeSliding:
-        label: Ask Liz
+        label: Ask MOSS
       bannerButton:
-        label: Ask Liz
+        label: Ask MOSS
   settings:
     title: AI Assistant
     goToSettings: Configure AI Assistant
@@ -146,16 +143,16 @@ ai:
       processing: 'Error processing messages: '
     websocket:
       generic: WebSocket error occurred. Please try again later.
-      connection: Failed to connect to Rancher AI Agent. Please try again later.
+      connection: Failed to connect to AI Agent. Please try again later.
       disconnected: Connection closed.
     agent:
       secret:
-        noPermission: You do not have permission to access the Rancher AI Agent configuration. Please contact your administrator.
-        missingConfig: Rancher AI Agent configuration is missing. Please go to Global [Settings > AI Assistant] and configure the agent.
+        noPermission: You do not have permission to access the AI Agent configuration. Please contact your administrator.
+        missingConfig: AI Agent configuration is missing. Please go to Global [Settings > AI Assistant] and configure the agent.
       deployment:
-        noPermission: You do not have permission to access the Rancher AI Agent. Please contact your administrator.
-        notFound: Rancher AI Agent not found. Please ensure the agent chart is installed.
-        notActive: Rancher AI Agent is not active. Please ensure the agent is running properly.
+        noPermission: You do not have permission to access the AI Agent. Please contact your administrator.
+        notFound: Nebula AI Agent not found. Please ensure the agent chart is installed.
+        notActive: AI Agent is not active. Please ensure the agent is running properly.
   options:
     chat:
       reset:

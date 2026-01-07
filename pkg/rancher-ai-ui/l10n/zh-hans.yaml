@@ -6,9 +6,6 @@ nav:
 ai:
   action:
     openChat: 询问MOSS
-  nonPrime:
-    title: Rancher AI 助手需要 Rancher Prime
-    message: Rancher AI 助手需要 Rancher Prime 订阅。请升级到 Prime 或卸载此扩展。
   header:
     title: MOSS
   message:
@@ -18,7 +15,7 @@ ai:
           line1: 我是MOSS，您的专属 AI 助手。
           line2: 我可以帮您做什么？
           line3: 您好，{name}！
-        info: 提示：您还可以与 Rancher UI 中的状态徽章和错误消息进行交互，向我寻求帮助。
+        info: 提示：您还可以与 UI 中的状态徽章和错误消息进行交互，向我寻求帮助。
         suggestions:
           label: 根据您的上下文，这里有一些建议：
     action:
@@ -82,7 +79,7 @@ ai:
           body: AI 可能产生不正确、不完整或过时的信息。您有责任独立验证所有响应的准确性和适当性。
         section2:
           title: 风险自负
-          body: 切勿在生产环境中应用命令、YAML 配置或技术建议，除非首先在安全的隔离测试环境中进行验证。SUSE 不对因使用此机器人提供的信息而导致的任何损害或损失（包括数据丢失、系统停机或安全漏洞）承担责任。
+          body: 切勿在生产环境中应用命令、YAML 配置或技术建议，除非首先在安全的隔离测试环境中进行验证。
         section3:
           title: 不要分享机密信息
           body: 不要在聊天中输入任何敏感数据、凭据、API 密钥或其他机密信息。此外，不要输入可用于识别活人的任何数据（例如姓名和联系方式）或个人身份信息。
@@ -142,16 +139,16 @@ ai:
       processing: 处理消息时出错：
     websocket:
       generic: 发生 WebSocket 错误。请稍后重试。
-      connection: 连接到 Rancher AI Agent 失败。请稍后重试。
+      connection: 连接到 AI Agent 失败。请稍后重试。
       disconnected: 连接已关闭。
     agent:
       secret:
-        noPermission: 您没有权限访问 Rancher AI Agent 配置。请联系您的管理员。
-        missingConfig: Rancher AI Agent 配置缺失。请前往全局 [设置 > AI 助手] 配置代理。
+        noPermission: 您没有权限访问 AI Agent 配置。请联系您的管理员。
+        missingConfig: AI Agent 配置缺失。请前往全局 [设置 > AI 助手] 配置代理。
       deployment:
-        noPermission: 您没有权限访问 Rancher AI Agent。请联系您的管理员。
-        notFound: 未找到 Rancher AI Agent。请确保已安装代理图表。
-        notActive: Rancher AI Agent 未激活。请确保代理正在正常运行。
+        noPermission: 您没有权限访问 AI Agent。请联系您的管理员。
+        notFound: 未找到 AI Agent。请确保已安装代理图表。
+        notActive: AI Agent 未激活。请确保代理正在正常运行。
   options:
     chat:
       reset:
