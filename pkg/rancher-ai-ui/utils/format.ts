@@ -146,6 +146,22 @@ export function formatSourceLinks(links: string[], value: string): string[] {
   ];
 }
 
+export function formatMessageStats(value: string): { wordCount?: number; tokenCount?: number; tokensUsed?: number; firstTokenLatency?: number; model?: string } | null {
+  value = value.replaceAll(Tag.StatsStart, '').replaceAll(Tag.StatsEnd, '').replace(/'([^']*)'/g, '"');
+
+  if (value) {
+    try {
+      const parsed = JSON.parse(value);
+
+      return parsed;
+    } catch {
+      // If JSON parsing fails, return null
+    }
+  }
+
+  return null;
+}
+
 export function formatErrorMessage(value: string): { message: string } {
   const rawValue = value.replaceAll(Tag.ErrorStart, '').replaceAll(Tag.ErrorEnd, '').trim();
   const normalizedValue = rawValue.replace(/'([^']*)'/g, '"');

@@ -267,7 +267,30 @@ onBeforeUnmount(() => {
         />
       </div>
       <div
-        v-if="props.message.timestamp"
+        v-if="props.message.stats"
+        class="chat-msg-stats"
+      >
+        <span v-if="props.message.stats.wordCount !== undefined">
+          word count: {{ props.message.stats.wordCount }}
+        </span>
+        <span v-if="props.message.stats.tokenCount !== undefined">
+          token count: {{ props.message.stats.tokenCount }}
+        </span>
+        <span v-if="props.message.stats.tokensUsed !== undefined">
+          tokens used: {{ props.message.stats.tokensUsed }}
+        </span>
+        <span v-if="props.message.stats.firstTokenLatency !== undefined">
+          first token latency: {{ props.message.stats.firstTokenLatency }}ms
+        </span>
+        <span v-if="props.message.stats.model">
+          model: {{ props.message.stats.model }}
+        </span>
+        <span v-if="props.message.timestamp">
+          time: {{ props.message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}
+        </span>
+      </div>
+      <div
+        v-else-if="props.message.timestamp"
         class="chat-msg-timestamp"
       >
         {{ props.message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}
@@ -435,6 +458,36 @@ onBeforeUnmount(() => {
   margin-top: 8px;
   margin-bottom: 8px;
   align-self: flex-end;
+}
+
+.chat-msg-stats {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+
+  > span {
+    display: inline-flex;
+    align-items: center;
+
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #94a3b8;
+      margin-left: 8px;
+    }
+
+    &:last-child::after {
+      display: none;
+    }
+  }
 }
 
 .icon-action-source {

@@ -8,7 +8,7 @@ import {
 } from '../types';
 import {
   formatMessagePromptWithContext, formatMessageRelatedResourcesActions, formatConfirmationAction, formatSuggestionActions, formatFileMessages,
-  formatErrorMessage, formatSourceLinks
+  formatErrorMessage, formatSourceLinks, formatMessageStats
 } from '../utils/format';
 import { downloadFile } from '@shell/utils/download';
 
@@ -241,6 +241,16 @@ export function useChatMessageComposable() {
       currentMsg.value.completed = true;
       break;
     default:
+      // Handle stats data
+      if (data.startsWith(Tag.StatsStart) && data.endsWith(Tag.StatsEnd)) {
+        const stats = formatMessageStats(data);
+
+        if (stats) {
+          currentMsg.value.stats = stats;
+        }
+        break;
+      }
+
       setPhase(MessagePhase.GeneratingResponse);
       if (currentMsg.value.completed === false && currentMsg.value.thinking === true) {
         if (!currentMsg.value.thinkingContent && data.trim() === '') {

@@ -44,6 +44,8 @@ export const enum Tag {
   DocLinkEnd = '</mcp-doclink>',
   ErrorStart = '<error>',
   ErrorEnd = '</error>',
+  StatsStart = '<stats>',
+  StatsEnd = '</stats>',
 }
 
 export const enum Role {
@@ -137,6 +139,13 @@ export interface Message {
   confirmation?: MessageConfirmation;
   sourceLinks?: string[];
   timestamp?: Date;
+  stats?: {
+    wordCount?: number;
+    tokenCount?: number;
+    tokensUsed?: number;
+    firstTokenLatency?: number;
+    model?: string;
+  };
 }
 
 export interface FormattedMessage extends Message {
