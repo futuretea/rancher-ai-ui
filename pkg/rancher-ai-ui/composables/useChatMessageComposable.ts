@@ -77,7 +77,11 @@ export function useChatMessageComposable() {
       contextContent = msg.contextContent || [];
     } else { /* msg is type of string */ }
 
-    wsSend(ws, formatMessagePromptWithContext(messageContent, selectedContext.value));
+    // Add language instruction based on current locale
+    const langInstruction = t('ai.prompt.langInstruction');
+    const finalMessage = `${ langInstruction }\n\n${ messageContent }`;
+
+    wsSend(ws, formatMessagePromptWithContext(finalMessage, selectedContext.value));
 
     addMessage({
       role,
@@ -136,7 +140,7 @@ export function useChatMessageComposable() {
     if (ws) {
       const initPrompt = t('ai.prompt.initialization');
 
-      wsSend(ws, formatMessagePromptWithContext(initPrompt, selectedContext.value));
+      wsSend(ws, formatMessagePromptWithContext(initPrompt, []));
       setPhase(MessagePhase.Processing);
     }
   }

@@ -59,9 +59,11 @@ ai:
       anyProblems: 问题
   prompt:
     initialization: |
-      您好！
-      - 请用当前语言回复所有内容。
-      - 不要要求任何确认或额外信息。
+      [INITIALIZATION]
+      系统启动完成。请用当前语言回复。
+      此时不要提供任何建议或操作建议。
+      等待用户的第一个问题。
+    langInstruction: 请用中文回复。
     placeholder: 询问MOSS...
     send: 发送
   context:

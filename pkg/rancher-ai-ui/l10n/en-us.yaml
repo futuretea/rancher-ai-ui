@@ -63,9 +63,11 @@ ai:
       anyProblems: 'any problems'
   prompt:
     initialization: |
-      Hi!
-      - Please respond in the current language.
-      - Don't ask for any confirmations or additional information.
+      [INITIALIZATION]
+      System startup complete. Please respond in the current language.
+      Do not provide any suggestions or actionable recommendations at this time.
+      Wait for the user's first question.
+    langInstruction: Please respond in English.
     placeholder: Ask MOSS...
     send: Send
   context:
