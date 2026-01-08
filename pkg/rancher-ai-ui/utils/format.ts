@@ -147,15 +147,17 @@ export function formatSourceLinks(links: string[], value: string): string[] {
 }
 
 export function formatErrorMessage(value: string): { message: string } {
-  value = value.replaceAll(Tag.ErrorStart, '').replaceAll(Tag.ErrorEnd, '').replace(/'([^']*)'/g, '"');
+  const rawValue = value.replaceAll(Tag.ErrorStart, '').replaceAll(Tag.ErrorEnd, '').trim();
+  const normalizedValue = rawValue.replace(/'([^']*)'/g, '"');
 
-  if (value) {
+  if (normalizedValue) {
     try {
-      const parsed = JSON.parse(value);
+      const parsed = JSON.parse(normalizedValue);
 
       return parsed;
-    } catch (e) {
-      console.error('Failed to parse error message:', e); /* eslint-disable-line no-console */
+    } catch {
+      // If JSON parsing fails, return the raw error text directly
+      return { message: rawValue };
     }
   }
 
