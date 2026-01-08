@@ -134,10 +134,7 @@ export function useChatMessageComposable() {
     const ws = event.target;
 
     if (ws) {
-      const initPrompt = `Hi!
-        - Send me a message with 3 ${ selectedContext.value?.length ? 'suggestions based on the context.' : 'generic suggestions.' }.
-        - DO NOT ask for any confirmation or additional information.
-      `;
+      const initPrompt = t('ai.prompt.initialization');
 
       wsSend(ws, formatMessagePromptWithContext(initPrompt, selectedContext.value));
       setPhase(MessagePhase.Processing);

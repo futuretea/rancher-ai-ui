@@ -58,6 +58,10 @@ ai:
       theError: 错误
       anyProblems: 问题
   prompt:
+    initialization: |
+      您好！
+      - 请用当前语言回复所有内容。
+      - 不要要求任何确认或额外信息。
     placeholder: 询问MOSS...
     send: 发送
   context:

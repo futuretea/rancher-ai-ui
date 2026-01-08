@@ -62,6 +62,10 @@ ai:
       theError: 'the error'
       anyProblems: 'any problems'
   prompt:
+    initialization: |
+      Hi!
+      - Please respond in the current language.
+      - Don't ask for any confirmations or additional information.
     placeholder: Ask MOSS...
     send: Send
   context:
