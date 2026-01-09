@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  ref, watch, toValue, computed, onBeforeMount
+  ref, watch, toValue, computed
 } from 'vue';
 import { useStore } from 'vuex';
 import cloneDeep from 'lodash/cloneDeep';
@@ -80,19 +80,6 @@ const activeChatbotOptions = [
     value:       ChatBotEnum.DeepSeek,
   },
 ];
-
-const canListSecrets = computed(() => {
-  return store.getters['management/canList'](SECRET);
-});
-
-onBeforeMount(() => {
-  if (!canListSecrets.value) {
-    store.state.$router.push({
-      name:   'c-cluster-settings',
-      params: { cluster: 'local' }
-    });
-  }
-});
 
 const resource = useFetch(async() => {
   let data;

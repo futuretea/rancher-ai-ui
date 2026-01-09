@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { base64Decode } from '@shell/utils/crypto';
 import { warn } from '../utils/log';
 import { AGENT_NAMESPACE, AGENT_NAME, AGENT_CONFIG_SECRET_NAME, PRODUCT_NAME } from '../product';
-import { SECRET, WORKLOAD_TYPES } from '@shell/config/types';
+import { SECRET } from '@shell/config/types';
 import { ActionType, Agent, ChatError } from '../types';
 
 /**
@@ -87,53 +87,13 @@ export function useAgentComposable() {
   }
 
   async function checkAgentAvailability() {
-    if (!store.getters['management/canList'](WORKLOAD_TYPES.DEPLOYMENT)) {
-      error.value = { key: 'ai.error.agent.deployment.noPermission' };
-    } else {
-      try {
-        const agent = await store.dispatch('management/find', {
-          type: WORKLOAD_TYPES.DEPLOYMENT,
-          id:   `${ AGENT_NAMESPACE }/${ AGENT_NAME }`
-        });
-
-        if (agent && agent.state !== 'active') {
-          error.value = {
-            key:    'ai.error.agent.deployment.notActive',
-            action: {
-              label:    t('ai.agent.goToDeployment'),
-              type:     ActionType.Button,
-              resource: {
-                cluster:   'local',
-                type:      WORKLOAD_TYPES.DEPLOYMENT,
-                namespace: AGENT_NAMESPACE,
-                name:      AGENT_NAME
-              }
-            }
-          };
-        }
-      } catch (e) {
-        warn('\'rancher-ai-agent\' deployment not found', e);
-        error.value = {
-          key:    'ai.error.agent.deployment.notFound',
-          action: {
-            label:    t('ai.agent.goToInstall'),
-            type:     ActionType.Button,
-            resource: { detailLocation: { name: 'c-cluster-apps-charts' } } // TODO: add params to open AI chart directly
-          }
-        };
-      }
-    }
-
-    return !error.value;
+    // Permission check removed - rely on backend RBAC for access control
+    // WebSocket connection will fail if user lacks services/proxy permission
+    return true;
   }
 
   async function getAgentConfigs() {
-    if (!store.getters['management/canList'](SECRET)) {
-      error.value = { key: 'ai.error.agent.secret.noPermission' };
-
-      return;
-    }
-
+    // Permission check removed - rely on backend RBAC for access control
     try {
       const secret = await store.dispatch('management/find', {
         type:    SECRET,
@@ -160,11 +120,8 @@ export function useAgentComposable() {
   }
 
   onMounted(async() => {
-    const available = await checkAgentAvailability();
-
-    if (available) {
-      getAgentConfigs();
-    }
+    await checkAgentAvailability();
+    getAgentConfigs();
   });
 
   return {
